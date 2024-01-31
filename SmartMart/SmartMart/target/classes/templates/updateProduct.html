@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UPDATE PRODUCTS </title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Add custom CSS styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+
+        form {
+            width: 400px;
+            padding: 30px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            color: black;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: black;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<form th:object="${currentProductObject}" method="post" th:action="@{/product/updateProduct}">
+    <label>PRODUCT ID </label>
+    <input type="text" th:field="*{productId}">
+    <label>PRODUCT NAME </label>
+    <input type="text" th:field="*{productName}">
+    <label>PRODUCT CATEGORY </label>
+    <input type="text" th:field="*{productCategory}">
+    <label>PRODUCT BRAND </label>
+    <input type="text" th:field="*{product_brand}">
+    <label>PRODUCT QTY </label>
+    <input type="text" th:field="*{productQty}">
+    <label>PRODUCT PRICE </label>
+    <input type="text" th:field="*{productPrice}">
+    <label>DISCOUNTED PRICE </label>
+    <input type="text" th:field="*{discounted_price}">
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

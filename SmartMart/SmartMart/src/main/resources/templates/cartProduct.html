@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Display All Products</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356_1280.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100vh;
+    }
+
+    .btn-primary {
+      background-color: #FF5733;
+      border-color: #FF5733;
+      transition: transform 0.9s;
+    }
+
+    .btn-primary:hover {
+      background-color: #D94514;
+      border-color: #D94514;
+      transform: rotate(360deg); /* Rotate 360 degrees on hover */
+    }
+
+    table {
+      width: auto;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-spacing: 0;
+      box-shadow: 2px 4px 6px rgba(2, 2, 2, 2.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 5px solid white;
+    }
+
+    th {
+      background-color: gray;
+      color: gold;
+    }
+
+    tr:hover {
+      background-color: black;
+      color:white;                
+    }
+
+    a.btn {
+      color: #ffffff;
+    }
+
+    a.btn-primary {
+      background-color: gold;
+      border-color: gray;
+    }
+
+    a.btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .operation-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .operation-buttons button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+  <center>
+    <h2 class="mb-4" style="color: black; font-size: 35px; font-family: 'Arial', sans-serif;">Product List</h2>
+    <br>
+    <a th:href="@{/product/display}"><button type="button" class="btn btn-primary">Home🏠</button></a>
+  </center>
+
+  <!-- Add Search Input and Button -->
+  <div class="mb-3">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search products">
+    <br>
+    <button onclick="searchProducts()" class="btn btn-primary">Search</button>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>CART ID</th>
+      <th>PRODUCT ID</th>
+      <th>PRODUCT NAME</th>
+      <th>PRODUCT PRICE</th>
+      <th>DISCOUNTED PRICE</th>
+      <th>PRODUCT QTY</th>
+      <th>OPERATION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="data:${cartList}">
+      <td th:text="${data.cartId}"></td>
+      <td th:text="${data.productId}"></td>
+      <td th:text="${data.productName}"></td>
+      <td>
+        Price:-<span th:text="${data.productPrice}"></span>
+        <br>
+        Total Price:- <span th:text="${data.productPrice * data.tempQty}"></span>
+      </td>
+      <td>
+        <span th:text="${data.discounted_price * data.tempQty}"></span>
+        <span></span>
+      </td>
+      <td th:text="${data.productQty}"></td>
+      <td class="operation-buttons">
+        <a th:href="@{/cart/decreaseProductQty/{id}(id=${data.cartId})}"><button>-</button></a>
+        <span th:text="${data.tempQty}"></span>
+        <a th:href="@{/cart/increaseProductQty/{id}(id=${data.cartId})}"><button>+</button></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function searchProducts() {
+    // Get input value
+    var input = document.getElementById('searchInput').value.toUpperCase();
+
+    // Get table rows
+    var rows = document.querySelector('tbody').getElementsByTagName('tr');
+
+    // Loop through rows and hide those that don't match the search query
+    for (var i = 0; i < rows.length; i++) {
+      var productName = rows[i].getElementsByTagName('td')[1].textContent.toUpperCase();
+
+      if (productName.includes(input)) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
